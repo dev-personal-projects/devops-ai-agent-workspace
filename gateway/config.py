@@ -1,6 +1,11 @@
 from pydantic_settings import BaseSettings, SettingsConfigDict
 from typing import List
 from supabase import create_client, Client
+import logging
+
+# Configure logging
+logging.basicConfig(level=logging.INFO)
+logger = logging.getLogger(__name__)
 
 class Settings(BaseSettings):
     PROJECT_NAME: str = "DevOps AI Agent"
@@ -19,6 +24,10 @@ class Settings(BaseSettings):
 
     @property
     def supabase(self) -> Client:
-        return create_client(self.SUPABASE_URL, self.SUPABASE_KEY)
+        try:
+            return create_client(self.SUPABASE_URL, self.SUPABASE_KEY)
+        except Exception as e:
+            logger.error(f"Failed to create Supabase client: {str(e)}")
+            raise e
 
 settings = Settings()
