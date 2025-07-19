@@ -1,0 +1,199 @@
+# 🚀 DevOps Assistant Agent
+
+An intelligent AI-powered DevOps automation platform for monitoring, troubleshooting, and optimizing Azure cloud infrastructure. It combines microservice architecture, LangChain agents, gRPC communication, and RAG (Retrieval-Augmented Generation) workflows to deliver actionable insights via RESTful endpoints or chat-based interactions.
+
+---
+
+## 📖 Table of Contents
+
+- [Project Overview](#project-overview)
+- [Architecture & Flow](#architecture--flow)
+- [Tech Stack](#tech-stack)
+- [Folder Structure](#folder-structure)
+- [Available Microservices](#available-microservices)
+- [API Endpoints](#api-endpoints)
+- [AI Agent Interaction](#ai-agent-interaction)
+- [Authentication & Security](#authentication--security)
+- [Deployment Targets](#deployment-targets)
+- [Visual Diagrams](#visual-diagrams)
+- [Installation & DevContainers](#installation--devcontainers)
+- [Future Roadmap](#future-roadmap)
+- [License](#license)
+
+---
+
+## 📌 Project Overview
+
+The DevOps Assistant Agent helps teams automate complex DevOps workflows. Features include:
+
+- Azure resource health analysis
+- Terraform plan auditing
+- Kubernetes cluster monitoring
+- Infrastructure documentation generation
+- Intelligent deployment debugging
+- AI-powered Q&A through LangChain agent tools
+
+---
+
+## 🧠 Architecture & Flow
+
++--------+ REST/gRPC +----------------------+ gRPC +---------------------+ | User | ─────────────────▶ | FastAPI Gateway | ──────────────▶ | Microservices | +--------+ +----------------------+ | [Analyzer, Monitor] | ↓ ⤷ Terraform, K8s, Logs, etc. +--------------------------+ | LangChain Agent + RAG | +--------------------------+ ↓ Azure Cognitive Search + AI Foundry ↓ Response Back to User via Gateway
+
+---
+
+## ⚙️ Tech Stack
+
+| Layer                      | Technology                           |
+| -------------------------- | ------------------------------------ |
+| API Gateway                | FastAPI (Python)                     |
+| Microservices Comm         | gRPC                                 |
+| Infra Automation           | Terraform                            |
+| AI Engine                  | LangChain + Azure AI Foundry         |
+| Knowledge Base             | Azure Cognitive Search / ChromaDB    |
+| Observability              | Azure Monitor + Application Insights |
+| Auth & Secrets             | Azure AD + Azure Key Vault           |
+| Containers & Orchestration | Docker + AKS                         |
+| Database Layer             | PostgreSQL + Redis                   |
+
+---
+
+## 📁 Folder Structure
+
+```bash
+devops-assistant-agent/
+├── .devcontainer/             # Dev container setup
+├── gateway/                   # FastAPI entrypoint
+│   ├── main.py                # App bootstrap
+│   ├── routers/               # REST endpoint modules
+│   └── docs/                  # Swagger UI config
+├── services/                  # gRPC microservices
+│   ├── terraform-analyzer/
+│   ├── kubernetes-monitor/
+│   ├── azure-health-check/
+│   ├── log-troubleshooter/
+│   └── doc-generator/
+├── ai-engine/                 # LangChain agent logic
+│   ├── orchestrator.py
+│   ├── tools/
+│   └── embeddings/
+├── knowledge-base/            # Document ingestion pipeline
+│   └── source_docs/
+├── infra/                     # Terraform modules
+├── diagrams/                  # Diagrams (PNG, SVG)
+├── scripts/                   # Developer helper scripts
+├── tests/                     # Test suites
+├── README.md
+├── pyproject.toml
+└── .env.sample
+
+
+🧩 Available Microservices
+Each service communicates using gRPC with the gateway or other services:
+
+Azure Health Check Service
+
+Terraform Plan Analyzer
+
+Kubernetes Monitor
+
+Deployment Log Troubleshooter
+
+Documentation Generator
+
+
+🌐 API Endpoints
+Azure Resource Analysis
+
+GET  /api/v1/azure/health/{subscription_id}
+POST /api/v1/azure/optimize
+GET  /api/v1/azure/recommendations/{resource_group}
+
+
+Terraform Plan Analyzer
+POST /api/v1/terraform/analyze
+GET  /api/v1/terraform/recommendations/{plan_id}
+POST /api/v1/terraform/validate
+
+Kubernetes Cluster Monitoring
+
+GET  /api/v1/kubernetes/health/{cluster_name}
+POST /api/v1/kubernetes/alerts
+GET  /api/v1/kubernetes/recommendations/{namespace}
+
+
+Infrastructure Documentation
+POST /api/v1/docs/generate/{subscription_id}
+GET  /api/v1/docs/architecture/{resource_group}
+GET  /api/v1/docs/export/{format}
+
+Deployment Debugging
+
+POST /api/v1/debug/analyze
+GET  /api/v1/debug/logs/{deployment_id}
+POST /api/v1/debug/troubleshoot
+
+
+🤖 AI Agent Interaction
+The LangChain-powered endpoint allows users to ask infrastructure-related questions:
+
+POST /api/v1/agent/ask
+
+Example payload:
+
+json
+{
+  "query": "Why did my AKS deployment fail?",
+  "context": "namespace=production"
+}
+Response:
+
+json
+{
+  "answer": "Pod xyz crashed due to missing environment variable 'DB_URL'. Recommended fix: set variable in Helm values.yaml."
+}
+
+
+
+🔐 Authentication
+All endpoints secured via:
+
+OAuth2 (Azure AD)
+
+API key fallback (for internal tools)
+
+Role-based access control per service module
+
+🌍 Deployment Targets
+Azure App Service / AKS → Scalable microservices runtime
+
+Azure AI Studio → Model orchestration and deployment
+
+Azure Key Vault → Credential and secrets management
+
+Azure Cognitive Search → Embedding-backed search
+
+Azure Monitor → Observability and performance metrics
+
+🧪 Testing & CI/CD
+GitHub Actions pipeline for:
+
+Unit & integration tests
+
+Terraform format & validate
+
+Container builds & push to ACR
+
+Endpoint smoke tests
+
+💬 Contribute / Ask / Extend
+Have a use-case in mind or want to add a new tool? Feel free to contribute a new microservice or extend a LangChain tool within the ai-engine.
+
+💡 Future Roadmap
+Dashboard UI (React + Azure Static Web App)
+
+Multicloud Support (GCP, AWS)
+
+Voice & Vision support via Azure GPT multimodal APIs
+
+ChatOps GitHub integration
+```
