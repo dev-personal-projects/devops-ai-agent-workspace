@@ -1,4 +1,6 @@
 from fastapi import APIRouter, HTTPException, status
+from fastapi.params import Depends
+
 from gateway.app.auth.models.auth_model import (
     SignupRequest,
     LoginRequest,
@@ -8,6 +10,7 @@ from gateway.app.auth.models.auth_model import (
     ErrorResponse
 )
 from gateway.app.auth.services.auth_service import signup_user, login_user, get_user_profile
+from gateway.app.auth.middleware.auth_middleware import  auth_required
 
 router = APIRouter(prefix="/auth", tags=["Authentication"])
 
@@ -46,3 +49,12 @@ def get_profile(user_id: str):
     Get user profile information
     """
     return get_user_profile(user_id)
+
+# Apply authentication middleware to all routes in this router
+@router.get("/info")
+def protected_info(current_user = Depends(auth_required)):
+    # current_user is a ProfileResponse
+    return {
+        "message": f"Welcome back, {current_user.full_name}!",
+        "role": current_user.role
+    }

@@ -197,3 +197,6 @@ Voice & Vision support via Azure GPT multimodal APIs
 
 ChatOps GitHub integration
 ```
+
+# grpc command to generate  python code from proto file
+python -m grpc_tools.protoc   -Iproto   --python_out=services/shared/grpc_stubs   --grpc_python_out=services/shared/grpc_stubs   proto/auth_events.proto

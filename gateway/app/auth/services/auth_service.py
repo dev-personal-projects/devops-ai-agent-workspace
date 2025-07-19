@@ -1,6 +1,7 @@
 from fastapi import HTTPException
 from gateway.config import settings
 import logging
+from gateway.app.auth.proto.grpc_client import  auth_event_client
 
 logger = logging.getLogger(__name__)
 
@@ -34,11 +35,26 @@ def signup_user(email: str, password: str, full_name: str):
             logger.error(f"Failed to create profile for user {user_id}")
             raise HTTPException(status_code=500, detail="Failed to create user profile")
 
+        # Emit signup event via gRPC (fire-and-forget)
+        try:
+            event_response = auth_event_client.emit_signup_event(
+                user_id=user_id,
+                email=email,
+                full_name=full_name,
+                role="developer"
+            )
+            if event_response and event_response.get("success"):
+                logger.info(f"Signup event successfully emitted for user {user_id}")
+            else:
+                logger.warning(f"Signup event emission failed for user {user_id}")
+        except Exception as e:
+            # Don't fail the signup if event emission fails
+            logger.error(f"Failed to emit signup event: {str(e)}")
+
         return {
             "message": "Signup successful",
             "user_id": user_id,
-            "email": email,
-            "full_name": full_name
+            "email": email
         }
 
     except Exception as e:
@@ -60,6 +76,21 @@ def login_user(email: str, password: str):
         if not result.user or not result.session:
             raise HTTPException(status_code=401, detail="Invalid email or password")
 
+        # Emit login event via gRPC (fire-and-forget)
+        try:
+            event_response = auth_event_client.emit_login_event(
+                user_id=result.user.id,
+                email=result.user.email,
+                token=result.session.access_token
+            )
+            if event_response and event_response.get("success"):
+                logger.info(f"Login event successfully emitted for user {result.user.id}")
+            else:
+                logger.warning(f"Login event emission failed for user {result.user.id}")
+        except Exception as e:
+            # Don't fail the login if event emission fails
+            logger.error(f"Failed to emit login event: {str(e)}")
+
         return {
             "access_token": result.session.access_token,
             "refresh_token": result.session.refresh_token,
@@ -67,8 +98,7 @@ def login_user(email: str, password: str):
             "expires_in": result.session.expires_in,
             "user": {
                 "id": result.user.id,
-                "email": result.user.email,
-                "full_name": result.user.user_metadata.get("fullName", ""),
+                "email": result.user.email
             }
         }
 
