@@ -4,6 +4,8 @@ class SignupRequest(BaseModel):
     password: str
     full_name: str
 
+
+
 class LoginRequest(BaseModel):
     email: EmailStr
     password: str
