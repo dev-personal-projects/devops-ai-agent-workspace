@@ -11,7 +11,8 @@ import logging
 from concurrent import futures
 from typing import  Dict, List, Callable
 import  json
-from services.shared.grpc_stubs import auth_events_pb2_grpc, auth_events_pb2
+from gateway.app.services.shared.grpc_stubs import auth_events_pb2_grpc
+from gateway.app.services.shared.grpc_stubs import auth_events_pb2
 
 # Configure logging
 logging.basicConfig(

@@ -1,7 +1,8 @@
 import grpc
 import logging
 from typing import Optional
-from services.shared.grpc_stubs import auth_events_pb2_grpc, auth_events_pb2
+from gateway.app.services.shared.grpc_stubs import auth_events_pb2_grpc
+from gateway.app.services.shared.grpc_stubs import auth_events_pb2
 
 logger = logging.getLogger(__name__)
 
