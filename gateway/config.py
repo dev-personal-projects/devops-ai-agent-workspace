@@ -23,6 +23,12 @@ class Settings(BaseSettings):
     AZURE_AI_FOUNDRY_API_KEY: str
     AZURE_AI_FOUNDRY_DEPLOYMENT_NAME: str = "gpt-o4-mini"
     AZURE_AI_FOUNDRY_API_VERSION : str = "2024-10-01-preview"
+    # Azure Monitor Configuration
+    AZURE_MONITOR_CONNECTION_STRING: str
+    # JWT Secret
+    JWT_SECRET: str 
+    # Debug mode
+    DEBUG: bool = False
 
 
     model_config = SettingsConfigDict(
