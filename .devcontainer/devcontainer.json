@@ -1,48 +1,48 @@
 {
-    "name": "devops-ai-agent-infra-dev",
-    "build": {
-        "dockerfile": "Dockerfile.dev",
-        "context": "."
-    },
-    "customizations": {
-        "vscode": {
-            "settings": {
-                "terminal.integrated.defaultProfile.linux": "bash",
-                "python.defaultInterpreterPath": "/workspace/lhinfravenv/bin/python",
-                "python.languageServer": "Pylance"
-            },
-            "extensions": [
-                "ms-vscode.azurecli",
-                "ms-vscode.azure-account",
-                "rogalmic.bash-debug",
-                "mads-hartmann.bash-ide-vscode",
-                "ms-azuretools.vscode-docker",
-                "janisdd.vscode-edit-csv",
-                "PKief.material-icon-theme",
-                "zhuangtongfa.material-theme",
-                "ms-python.vscode-pylance",
-                "ms-python.python",
-                "ms-python.debugpy",
-                "mechatroner.rainbow-csv",
-                "ms-toolsai.jupyter",
-                "ms-toolsai.vscode-jupyter-cell-tags",
-                "ms-toolsai.jupyter-keymap",
-                "ms-toolsai.vscode-jupyter-slideshow",
-                "ms-toolsai.jupyter-renderers",
-                "ms-vscode.powershell",
-                "ms-mssql.mssql",
-                "ms-azuretools.vscode-azureresourcegroups"
-            ]
-        }
-    },
-    "forwardPorts": [],
-    "postCreateCommand": "echo 'Environment ready!'",
-    "remoteUser": "root",
-    "runArgs": ["--privileged"],
-    "mounts": [
-        "source=/var/run/docker.sock,target=/var/run/docker.sock,type=bind"
-    ],
-    "remoteEnv": {
-        "DOCKER_HOST": "unix:///var/run/docker.sock"
+  "name": "devops-ai-agent-infra-dev",
+  "build": {
+    "dockerfile": "Dockerfile.dev",
+    "context": "."
+  },
+  "customizations": {
+    "vscode": {
+      "settings": {
+        "terminal.integrated.defaultProfile.linux": "bash",
+        "python.defaultInterpreterPath": "/workspace/lhinfravenv/bin/python",
+        "python.languageServer": "Pylance"
+      },
+      "extensions": [
+        "ms-vscode.azurecli",
+        "ms-vscode.azure-account",
+        "rogalmic.bash-debug",
+        "mads-hartmann.bash-ide-vscode",
+        "ms-azuretools.vscode-docker",
+        "janisdd.vscode-edit-csv",
+        "PKief.material-icon-theme",
+        "zhuangtongfa.material-theme",
+        "ms-python.vscode-pylance",
+        "ms-python.python",
+        "ms-python.debugpy",
+        "mechatroner.rainbow-csv",
+        "ms-toolsai.jupyter",
+        "ms-toolsai.vscode-jupyter-cell-tags",
+        "ms-toolsai.jupyter-keymap",
+        "ms-toolsai.vscode-jupyter-slideshow",
+        "ms-toolsai.jupyter-renderers",
+        "ms-vscode.powershell",
+        "ms-mssql.mssql",
+        "ms-azuretools.vscode-azureresourcegroups"
+      ]
     }
+  },
+  "forwardPorts": [],
+  "postCreateCommand": "echo 'Environment ready!'",
+  "remoteUser": "root",
+  "runArgs": ["--privileged"],
+  "mounts": [
+    "source=/var/run/docker.sock,target=/var/run/docker.sock,type=bind"
+  ],
+  "remoteEnv": {
+    "DOCKER_HOST": "unix:///var/run/docker.sock"
+  }
 }

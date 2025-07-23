@@ -37,8 +37,7 @@ def signup_user(email: str, password: str, full_name: str):
         return {
             "message": "Signup successful",
             "user_id": user_id,
-            "email": email,
-            "full_name": full_name
+            "email": email
         }
 
     except Exception as e:
@@ -67,8 +66,7 @@ def login_user(email: str, password: str):
             "expires_in": result.session.expires_in,
             "user": {
                 "id": result.user.id,
-                "email": result.user.email,
-                "full_name": result.user.user_metadata.get("fullName", ""),
+                "email": result.user.email
             }
         }
 
