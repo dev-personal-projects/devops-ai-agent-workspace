@@ -1,5 +1,6 @@
 # Use the base image with Azure CLI and Python installed
 FROM mcr.microsoft.com/azure-cli:2.60.0
+
 # This version of the az-cli image comes with Python 3.11.9
 # Both the azure-cli:2.60.0 image and Python version 3.11.9 have been thoroughly tested and certified to function with all the scripts in this repo.
 # Changing the image or python version is possible, but untested and therefore not supported. Proceed at your own risk.
@@ -29,26 +30,26 @@ RUN apk add --update docker openrc
 RUN rc-update add docker boot
 
 # Create a virtual environment for your project in the /workspace directory
-RUN python3 -m venv /workspace/lhinfravenv
+# RUN python3 -m venv /workspace/lhinfravenv
 
 # Set the working directory
 WORKDIR /workspace
 
-# Install Python packages in the virtual environment
-RUN /workspace/lhinfravenv/bin/pip install --upgrade pip && \
-    /workspace/lhinfravenv/bin/pip install pandas==2.2.2
+# # Install Python packages in the virtual environment
+# RUN /workspace/lhinfravenv/bin/pip install --upgrade pip && \
+#     /workspace/lhinfravenv/bin/pip install pandas==2.2.2
 
-# Install go-sqlcmd
-RUN curl -Lo /tmp/go-sqlcmd.tar.bz2 https://github.com/microsoft/go-sqlcmd/releases/download/v1.6.0/sqlcmd-v1.6.0-linux-arm64.tar.bz2 && \
-    mkdir -p /opt/sqlcmd && \
-    tar -xvjf /tmp/go-sqlcmd.tar.bz2 -C /opt/sqlcmd || { echo "Failed to extract go-sqlcmd.tar.bz2"; exit 1; } && \
-    rm /tmp/go-sqlcmd.tar.bz2
+# # Install go-sqlcmd
+# RUN curl -Lo /tmp/go-sqlcmd.tar.bz2 https://github.com/microsoft/go-sqlcmd/releases/download/v1.6.0/sqlcmd-v1.6.0-linux-arm64.tar.bz2 && \
+#     mkdir -p /opt/sqlcmd && \
+#     tar -xvjf /tmp/go-sqlcmd.tar.bz2 -C /opt/sqlcmd || { echo "Failed to extract go-sqlcmd.tar.bz2"; exit 1; } && \
+#     rm /tmp/go-sqlcmd.tar.bz2
 
-# Add go-sqlcmd to PATH
-ENV PATH="/opt/sqlcmd:$PATH"
+# # Add go-sqlcmd to PATH
+# ENV PATH="/opt/sqlcmd:$PATH"
 
 # Add user to the Docker group if the group exists, otherwise create the group and add the user
-RUN if getent group docker; then addgroup $(whoami) docker; else addgroup docker && addgroup $(whoami) docker; fi
+# RUN if getent group docker; then addgroup $(whoami) docker; else addgroup docker && addgroup $(whoami) docker; fi
 
 # Set the default shell to bash
 SHELL ["/bin/bash", "-c"]

@@ -200,3 +200,9 @@ ChatOps GitHub integration
 
 # grpc command to generate  python code from proto file
 python -m grpc_tools.protoc   -Iproto   --python_out=services/shared/grpc_stubs   --grpc_python_out=services/shared/grpc_stubs   proto/auth_events.proto
+
+
+pip install opentelemetry-api
+pip install opentelemetry-sdk
+
+ uvicorn gateway.main:app --host 0.0.0.0 --port 8000 --reload
