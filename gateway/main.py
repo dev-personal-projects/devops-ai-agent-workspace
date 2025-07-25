@@ -14,20 +14,20 @@ from gateway.core.logging import setup_logging, get_logger
 from gateway.app.auth.middleware.request_id import RequestIDMiddleware
 
 # Logging configuration
-setup_logging(debug=settings.DEBUG)
+setup_logging(debug=settings.debug)
 logger = get_logger(__name__)
 
 # FastAPI app
 app = FastAPI(
-    title=settings.PROJECT_NAME,
-    description=settings.PROJECT_DESCRIPTION,
-    version=settings.VERSION,
+    title=settings.project_name,
+    description=settings.project_description,
+    version=settings.version,
 )
 
 # CORS middleware
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=settings.ALLOWED_ORIGINS,
+    allow_origins=settings.allowed_origins,
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],

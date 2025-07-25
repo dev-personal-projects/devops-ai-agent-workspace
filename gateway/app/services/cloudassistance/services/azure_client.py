@@ -10,10 +10,10 @@ class AzureAIFoundryClient:
     """Simple client for Azure AI Foundry API calls."""
 
     def __init__(self):
-        self.endpoint = settings.AZURE_AI_FOUNDRY_ENDPOINT.rstrip("/")
-        self.api_key = settings.AZURE_AI_FOUNDRY_API_KEY
-        self.deployment_name = settings.AZURE_AI_FOUNDRY_DEPLOYMENT_NAME
-        self.api_version = settings.AZURE_AI_FOUNDRY_API_VERSION
+        self.endpoint = settings.azure_ai_foundry_endpoint.rstrip("/")
+        self.api_key = settings.azure_ai_foundry_api_key
+        self.deployment_name = settings.azure_ai_foundry_deployment_name
+        self.api_version = settings.azure_ai_foundry_api_version
 
     async def send_chat_completion(
             self,
