@@ -206,3 +206,32 @@ pip install opentelemetry-api
 pip install opentelemetry-sdk
 
  uvicorn gateway.main:app --host 0.0.0.0 --port 8000 --reload
+
+
+# Test Redis connection first
+python test_redis.py
+
+# Start Celery worker
+celery -A worker.celery_app worker --loglevel=info
+
+# In another terminal, start your FastAPI app
+uvicorn gateway.main:app --reload
+
+
+# Remove conflicting version
+pip uninstall PyGithub
+
+# Install Azure CLI compatible version
+pip install "PyGithub>=1.55,<2.0"
+
+# Verify compatibility
+python -c "from github import Github; print('PyGithub version compatible')"
+
+
+
+# Start worker for all queues
+celery -A worker.celery_app worker --loglevel=info
+
+# Start specialized workers
+celery -A worker.celery_app worker --queues=github_api --loglevel=info --concurrency=2
+celery -A worker.celery_app worker --queues=deployments --loglevel=info --concurrency=1
