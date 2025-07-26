@@ -15,7 +15,7 @@ from gateway.config import settings
 
 
 JWT_ALG = "HS256"
-_JWT_SECRET = settings.jwt_secret  # override via env / DI
+_JWT_SECRET = settings.jwt_secret
 
 _hasher = PasswordHasher()
 

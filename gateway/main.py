@@ -12,6 +12,7 @@ from opentelemetry.sdk.trace.export import BatchSpanProcessor
 from opentelemetry.instrumentation.fastapi import FastAPIInstrumentor
 from gateway.core.logging import setup_logging, get_logger
 from gateway.app.auth.middleware.request_id import RequestIDMiddleware
+from gateway.app.services.deployments.deployments_router import router as deployment_router
 
 # Logging configuration
 setup_logging(debug=settings.debug)
@@ -93,6 +94,7 @@ async def auth_middleware(request: Request, call_next):
 # Include routers
 app.include_router(auth_router)
 app.include_router(chat_router)
+app.include_router(deployment_router)
 
 @app.get("/")
 def read_root():
